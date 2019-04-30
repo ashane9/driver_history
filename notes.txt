@@ -1,0 +1,1 @@
+https://github.com/iain/adventures-with-ruby/blob/master/articles/domain-driven-design-building-blocks-in-ruby.md
