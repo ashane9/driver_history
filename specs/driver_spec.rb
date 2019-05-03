@@ -53,4 +53,27 @@ describe 'Driver' do
       expect(@driver.total_mileage).to eq 39
     end
   end
+
+  describe '#total_time_traveled' do
+    before(:each) do
+        trip_1 = double('Trip')
+        trip_2 = double('Trip')
+        allow(trip_1).to receive(:time_difference_in_hours) {10.23}
+        allow(trip_2).to receive(:time_difference_in_hours) {6.25}
+        @driver.instance_variable_set(:@trips, [trip_1, trip_2])
+      end
+      it 'returns the sum of trip travel time' do
+        expect(@driver.total_time_traveled).to eq 16.48
+      end
+  end
+
+  describe '#average_mph' do
+    before(:each) do
+      allow(@driver).to receive(:total_mileage) {39}
+      allow(@driver).to receive(:total_time_traveled) {0.83}
+    end
+    it 'returns the average trip mph' do
+      expect(@driver.average_mph).to eq 47
+    end
+  end
 end

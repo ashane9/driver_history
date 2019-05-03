@@ -20,4 +20,12 @@ class Driver
     @trips.map{|trip| trip.miles}.sum
   end
 
+  def total_time_traveled    
+    @trips.map{|trip| trip.time_difference_in_hours}.sum
+  end
+
+  def average_mph
+    (total_mileage / total_time_traveled).round
+  end
+
 end
