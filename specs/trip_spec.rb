@@ -1,4 +1,4 @@
-require './env'
+require 'rspec'
 require './models/trip'
 
 describe 'Trip' do

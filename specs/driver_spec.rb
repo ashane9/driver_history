@@ -1,6 +1,5 @@
-require './env'
+require 'rspec'
 require './models/driver'
-
 
 describe 'Driver' do
   before(:each) do
