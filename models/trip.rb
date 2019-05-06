@@ -14,7 +14,11 @@ class Trip
   end
 
   def miles_per_hour
-    (@miles / time_difference_in_hours).round
+    begin
+      (@miles / time_difference_in_hours).round
+    rescue ZeroDivisionError
+      0
+    end
   end
 
   def time_difference_in_hours

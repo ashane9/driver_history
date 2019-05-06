@@ -1,13 +1,14 @@
-require 'driver'
-require 'trip'
+require './lib/driver_history_parser'
 
+# @driver_history = DriverHistoryParser.new
 if ARGV.length > 0
   ARGV.each do |filename| 
-    DriverHistoryParser.parse(filename)
+    # @driver_history.process(File.open(filename))
+    puts DriverHistoryParser.new.process(File.open(filename))
   end
 else
-  puts STDIN.read
+  # @driver_history.process(STDIN.read.split(/\n/))
+  puts DriverHistoryParser.new.process(STDIN.read.split(/\n/))
 end
 
-DriverHistoryParser.register_drivers
-DriverHistoryParser.record_trips
+# puts @driver_history.report

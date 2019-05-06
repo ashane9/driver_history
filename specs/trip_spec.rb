@@ -33,11 +33,40 @@ describe 'Trip' do
     end
   end
 
-  describe '#time_difference_in_hours' do
+  describe '#time_difference_in_hours' do      
     it {expect(@trip.time_difference_in_hours).to be_within(0.01).of(4.53)}
+
+    context 'start and end time are the same' do
+      before(:each) do
+        time = Time.now
+        @trip.instance_variable_set(:@start_ts, time)
+        @trip.instance_variable_set(:@stop_ts, time)
+      end
+      it 'returns time difference as 0' do
+        expect(@trip.time_difference_in_hours).to eq 0
+      end
+    end
   end
 
   describe '#miles_per_hour' do
+    context 'time difference is zero' do
+      before(:each) do        
+        @trip.instance_variable_set(:@miles, 16)
+        allow(@trip).to receive(:time_difference_in_hours) {0}
+      end
+      it 'returns mph as zero' do
+        expect(@trip.miles_per_hour).to eq 0
+      end
+    end
+    context 'miles is zero' do
+      before(:each) do        
+        @trip.instance_variable_set(:@miles, 0)
+        allow(@trip).to receive(:time_difference_in_hours) {4.5}
+      end
+      it 'returns mph as zero' do
+        expect(@trip.miles_per_hour).to eq 0
+      end
+    end
     it 'returns mph rounded to the nearest integer' do
       expect(@trip.miles_per_hour).to eq 4
     end

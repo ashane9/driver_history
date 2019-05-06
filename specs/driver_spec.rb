@@ -13,32 +13,24 @@ describe 'Driver' do
     end
   end
 
-  describe '#create_trip' do
-    it 'returns a new Trip' do
-      expect(@driver.create_trip('13:10', '20:00', '17.4')).to be_instance_of Trip
-    end
-  end
-
   describe '#add_trip' do
     context 'mph is not between 5 and 100' do
       before(:each) do
-        trip = double('Trip')
-        allow(trip).to receive(:is_mph_between_5_and_100?) {false}
-        @driver.add_trip(trip)
+        allow_any_instance_of(Trip).to receive(:is_mph_between_5_and_100?) {false}
+        @driver.add_trip('13:10','20:00','17.4')
       end
-      it 'is discarded' do
-        expect(@driver.trips.empty?).to be_truthy
+      it 'new trip is discarded' do
+        expect(@driver.rejected_trips.last).to be_instance_of Trip
       end
     end
 
     context 'mph is between 5 and 100' do
       before(:each) do
-        @trip = double('Trip')
-        allow(@trip).to receive(:is_mph_between_5_and_100?) {true}
-        @driver.add_trip(@trip)
+        allow_any_instance_of(Trip).to receive(:is_mph_between_5_and_100?) {true}
+        @driver.add_trip('13:10','20:00','17.4')
       end
       it 'new trip is registered' do
-        expect(@driver.trips.last).to be @trip
+        expect(@driver.trips.last).to be_instance_of Trip
       end
     end
   end
@@ -68,12 +60,71 @@ describe 'Driver' do
   end
 
   describe '#average_mph' do
+    context 'acceptable trip' do
+      before(:each) do
+        allow(@driver).to receive(:total_mileage) {39}
+        allow(@driver).to receive(:total_time_traveled) {0.83}
+      end
+      it 'returns the average trip mph' do
+        expect(@driver.average_mph).to eq 47
+      end
+    end
+    context 'mileage is zero' do
+      before(:each) do
+        allow(@driver).to receive(:total_mileage) {0}
+        allow(@driver).to receive(:total_time_traveled) {0.83}
+      end
+      it 'returns mph as zero' do
+        expect(@driver.average_mph).to eq 0
+      end
+    end
+    context 'travel time is zero' do
+      before(:each) do
+        allow(@driver).to receive(:total_mileage) {39}
+        allow(@driver).to receive(:total_time_traveled) {0}
+      end
+      it 'returns mph as zero' do
+        expect(@driver.average_mph).to eq 0
+      end
+    end
+    context 'mileage and travel time is zero' do
+      before(:each) do
+        allow(@driver).to receive(:total_mileage) {0}
+        allow(@driver).to receive(:total_time_traveled) {0}
+      end
+      it 'returns mph as zero' do
+        expect(@driver.average_mph).to eq 0
+      end
+    end
+  end
+
+  describe '#report' do 
     before(:each) do
       allow(@driver).to receive(:total_mileage) {39}
       allow(@driver).to receive(:total_time_traveled) {0.83}
     end
-    it 'returns the average trip mph' do
-      expect(@driver.average_mph).to eq 47
+    it 'returns Driver\'s name with total mileage and mph' do
+      expect(@driver.report).to eq "Bob: 39 miles @ 47 mph\n"
     end
+
+    context 'zero total mileage' do
+      before(:each) do        
+        allow(@driver).to receive(:total_mileage) {0}
+        allow(@driver).to receive(:total_time_traveled) {0.83}
+      end
+      it 'returns Driver\'s name with 0 total mileage' do
+        expect(@driver.report).to eq "Bob: 0 miles\n"
+      end 
+    end    
+
+    context 'zero average mph' do
+      before(:each) do
+        allow(@driver).to receive(:total_mileage) {10}
+        allow(@driver).to receive(:total_time_traveled) {0}
+      end
+      it 'returns Driver\'s name with 0 total mileage' do
+        expect(@driver.report).to eq "Bob: 0 miles\n"
+      end 
+    end  
   end
 end
