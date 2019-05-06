@@ -1,5 +1,6 @@
 require 'rspec'
 require './models/driver'
+require './models/trip'
 
 describe 'Driver' do
   before(:each) do
@@ -19,7 +20,7 @@ describe 'Driver' do
         @driver.add_trip('13:10','20:00','17.4')
       end
       it 'new trip is discarded' do
-        expect(@driver.rejected_trips.last).to be_instance_of Trip
+        expect(@driver.rejected_trips.last.include?('13:10 20:00 17.4')).to be_truthy
       end
     end
 
