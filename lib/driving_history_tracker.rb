@@ -1,7 +1,6 @@
-require './models/driver'
+require './lib/driver'
 
-class DriverHistoryParser
-  # attr_reader :driver
+class DrivingHistoryTracker
   attr_reader :drivers, :rejected_entries
 
   def initialize

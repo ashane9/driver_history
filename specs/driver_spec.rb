@@ -1,6 +1,6 @@
 require 'rspec'
-require './models/driver'
-require './models/trip'
+require './lib/driver'
+require './lib/trip'
 
 describe 'Driver' do
   before(:each) do

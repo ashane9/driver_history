@@ -1,5 +1,5 @@
 require 'rspec'
-require './models/trip'
+require './lib/trip'
 
 describe 'Trip' do
   before(:each) do

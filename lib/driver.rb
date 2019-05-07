@@ -1,4 +1,4 @@
-require './models/trip'
+require './lib/trip'
 
 class Driver
   attr_reader :name, :trips, :rejected_trips

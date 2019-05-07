@@ -1,16 +1,10 @@
 require 'rspec'
-require './lib/driver_history_parser'
-require './models/driver'
+require './lib/driving_history_tracker'
+require './lib/driver'
 
-describe 'DriverHistoryParser' do
+describe 'DrivingHistoryTracker' do
   before(:each) do
-    @driver_history = DriverHistoryParser.new
-  end
-
-  describe('#initialize') do
-  end
-
-  describe('#parse') do
+    @driver_history = DrivingHistoryTracker.new
   end
   
   describe('#find_driver') do
