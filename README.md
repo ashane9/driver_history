@@ -23,9 +23,8 @@ The approach was to build this application in Ruby without the use of an ORM. Th
       - checks if mph is <= 5 or >= 100
 
 ## Usage
-`bin\report_driving_history.rb` is the script for execution. 
-
 To execute the script:
+
 `ruby bin\report_driving_history.rb input.txt [-o]` 
 
 or 
@@ -63,7 +62,7 @@ execute:
 
 or 
 
-  To test a large data sample execute:
+  To test a large data sample, execute:
   
     `ruby bin\generate_data.rb [number]` 
     
