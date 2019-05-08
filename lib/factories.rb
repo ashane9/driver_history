@@ -12,7 +12,7 @@ end
 FactoryBot.define do
   factory :input_data do
     command {'Driver'}
-    name {Faker::Name.first_name}
+    name {Faker::Name.male_first_name}
 
     trait :trip do
       command {'Trip'}
