@@ -1,7 +1,8 @@
 ## Driver History
 For reporting the total mileage and average mph for set of drivers.
 
-The approach was to build this application in Ruby without the use of an ORM. There are 3 classes: 
+The approach was to build this application in Ruby without the use of an ORM.
+There are 3 classes: 
   1. `DrivingHistoryTracker`
       - processes the input data 
           - registering drivers
@@ -21,6 +22,8 @@ The approach was to build this application in Ruby without the use of an ORM. Th
       - calculates the time difference between stop and start
       - calculates the miles per hour for the trip
       - checks if mph is <= 5 or >= 100
+
+I chose to go with objects in order to create a visual understanding of the code and to allow the single object to preform the necessary tasks that are related to that object. By having that object be responsible for these tasks, it prevents having to pass around a data structure. There is the added benefit of creating function names that describe exactly what action it is performing.  For example, I can say `Trip.new('10:10','15:30','30.5').miles_per_hour` and be confident I am getting the mph for that particular trip.
 
 ## Usage
 To execute the script:

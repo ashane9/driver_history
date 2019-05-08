@@ -7,6 +7,7 @@ class Trip
     @start_ts = Time.parse(start_ts)
     @stop_ts = Time.parse(stop_ts)
     @miles = self.class.round_to_integer(miles)
+    raise ArgumentError, "miles #{miles} cannot be negative" if @miles.negative?
   end
 
   def self.round_to_integer(value)

@@ -9,11 +9,15 @@ class Driver
     @rejected_trips = []
   end
 
-  def add_trip(start_ts, stop_ts, miles)    
-    new_trip = Trip.new(start_ts, stop_ts, miles)
-    if new_trip.is_mph_between_5_and_100?
-      @trips << new_trip
-    else
+  def add_trip(start_ts, stop_ts, miles)
+    begin
+      new_trip = Trip.new(start_ts, stop_ts, miles)
+      if new_trip.is_mph_between_5_and_100?
+        @trips << new_trip
+      else
+        @rejected_trips << "Trip #{@name} #{start_ts} #{stop_ts} #{miles}"
+      end
+    rescue ArgumentError
       @rejected_trips << "Trip #{@name} #{start_ts} #{stop_ts} #{miles}"
     end
   end

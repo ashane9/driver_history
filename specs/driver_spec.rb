@@ -33,6 +33,26 @@ describe 'Driver' do
         expect(@driver.trips.last).to be_instance_of Trip
       end
     end
+
+    context 'ArgumentError' do
+      context 'invalid hour' do
+        before(:each) do
+          @driver.add_trip('13:10', '25:00', '17.4')
+        end
+        it 'new trip is discarded' do
+          expect(@driver.rejected_trips.last.include?('13:10 25:00 17.4')).to be_truthy
+        end
+      end
+
+      context 'invalid minute' do
+        before(:each) do
+          @driver.add_trip('13:70', '20:00', '17.4')
+        end
+        it 'new trip is discarded' do
+          expect(@driver.rejected_trips.last.include?('13:70 20:00 17.4')).to be_truthy
+        end
+      end
+    end
   end
 
   describe '#total_mileage' do

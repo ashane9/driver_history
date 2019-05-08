@@ -21,6 +21,12 @@ describe 'Trip' do
     it 'has the number of miles driven' do
       expect(@trip.miles).to be_kind_of Integer
     end
+
+    context 'negative miles' do
+      it 'raises an ArgumentError' do
+        expect{Trip.new('10:10','12:10','-6')}.to raise_error(ArgumentError, "miles -6 cannot be negative")
+      end
+    end
   end
 
   describe '.round_to_integer' do
@@ -30,6 +36,10 @@ describe 'Trip' do
 
     context 'rounding down to nearest integer' do
       it {expect(Trip.round_to_integer('14.2')).to eq 14}
+    end
+
+    context 'zero remains zero' do
+      it {expect(Trip.round_to_integer('0.0')).to eq 0}
     end
   end
 
